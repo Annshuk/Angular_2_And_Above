@@ -1,0 +1,118 @@
+<form [formGroup]="myForm" (submit)="validate()" action="/success">
+<div ngClass="angular_form">
+    <h1>Registration Form</h1>
+
+    <!--    Firstname     -->
+    <div ngClass="label">Firstname:</div>
+    <div ngClass="form">
+        <input type="text" formControlName="firstname" />
+        <div *ngFor="let f of messages.firstname">
+            <div ngClass="error" *ngIf="myForm.get('firstname').hasError(f.type) && ( myForm.get('firstname').touched || myForm.get('firstname').dirty)">{{f.message}}</div>
+        </div>
+    </div>
+
+    <!--       Lastname            -->
+    <div ngClass="label">Lastname: </div>
+    <div ngClass="form">
+        <input type="text" formControlName="lastname" />
+           <div *ngFor="let l of messages.lastname">
+                <div ngClass="error" *ngIf="myForm.get('lastname').hasError(l.type) && (myForm.get('lastname').touched || myForm.get('lastname').dirty)">{{l.message}}</div>
+           </div>
+    </div>
+    
+    <!--        Email       -->
+    <div ngClass="label">Email: </div>
+    <div ngClass="form">
+        <input type="email" formControlName="email" />
+        <div *ngFor="let em of messages.email">
+            <div ngClass="error"  *ngIf="myForm.get('email').hasError(em.type) && (myForm.get('email').touched || myForm.get('email').dirty )">{{em.message}}</div>
+        </div>
+    </div>
+
+    <!--        Sub group: address has two form controls, 1. state 2. city     -->
+    <div  formGroupName="address">
+        <!--       1. State       -->
+        <div ngClass="label">State: </div>
+        <div ngClass="form">
+                <select formControlName="state" [(ngModel)]="s">
+                    <option value="ts">Telangana</option>
+                    <option value="ap">AndhraPradesh</option>
+                    <option value="tn">Tamilnadu</option>
+                    <option value="ka">Karnataka</option>
+                </select>
+            <div *ngFor="let c of messages.state">
+                <div ngClass="error" *ngIf="myForm.get('address').get('state').hasError(c.type) && (myForm.get('address').get('state').touched || myForm.get('address').get('state').dirty)">{{c.message}}</div>
+            </div>
+        </div>
+        <!--       2. City        -->
+        <div ngClass="label">City: </div>
+        <div ngClass="form">
+            <div [ngSwitch]="s">
+                <div *ngSwitchCase="'ts'">
+                    <select formControlName="city">
+                        <option *ngFor="let c of states.telangana" value={{c}}>{{c}}</option>
+                    </select>
+                </div>
+                <div *ngSwitchCase="'ap'">
+                    <select formControlName="city">
+                        <option *ngFor="let c of states.andhra" value={{c}}>{{c}}</option>
+                    </select>
+                </div>
+                <div *ngSwitchCase="'tn'">
+                    <select formControlName="city">
+                        <option *ngFor="let c of states.tamilnadu" value={{c}}>{{c}}</option>
+                    </select>
+                </div>
+                <div *ngSwitchCase="'ka'">
+                    <select formControlName="city">
+                        <option *ngFor="let c of states.karnataka" value={{c}}>{{c}}</option>
+                    </select>
+                </div>
+                <div *ngSwitchDefault>
+                    <select>
+                        <option></option>
+                    </select>
+                </div>
+            </div>            
+        </div>
+    </div>
+
+    <!--        Phone: number       -->
+    <div ngClass="label">Phone: </div>
+    <div ngClass="form">
+        <input type="number" formControlName="phone"/>
+        <div *ngFor="let p of messages.phone">
+            <div ngClass="error" *ngIf="myForm.get('phone').hasError(p.type) && (myForm.get('phone').touched || myForm.get('phone').dirty)">{{p.message}}</div>
+        </div>
+    </div>
+
+    <!--    Gender: Radio Button      -->
+    <div ngClass="label">Gender: </div>
+    <div ngClass="form">
+        <input type="radio" formControlName="gender" value="Male">Male
+        <input type="radio" formControlName="gender" value="Female">Female
+        <div *ngFor="let g of messages.gender">
+            <div ngClass="error" *ngIf="myForm.get('gender').hasError(g.type) && myForm.get('gender').touched">{{g.message}}</div>
+        </div>
+    </div>
+
+    <!--        Favourites: Checkbox        -->
+    <div ngClass="label">Favourites: </div>
+    <div ngClass="form">
+        <input type="checkbox" formControlName="hobbies" value="sports">Sports
+        <input type="checkbox" formControlName="hobbies" value="music">Music
+        <input type="checkbox" formControlName="hobbies" value="movies">Movies
+        <div *ngFor="let h of messages.hobbies">
+            <div ngClass="error" *ngIf="myForm.get('hobbies').hasError(h.type) && (myForm.get('hobbies').dirty)">
+                {{h.message}}
+            </div>
+        </div>
+    </div>
+    
+    <!--       Form Submit button       -->
+    <div ngClass="form">
+        <!--        Enable button if form is valid else disable     -->
+        <input type="submit" value="Register"  [disabled]="!myForm.valid"/>
+    </div>
+</div>
+</form>

@@ -1,0 +1,25 @@
+.angular_form {
+    width: 400px;
+    height: 400px;
+    margin-left: 200px;
+    padding: 50px;
+    
+}
+.form {
+    width: 65%;
+    height: auto;
+    float: right;
+}
+.error {
+    color: red;
+    width: 300px;
+    height: 20px;
+}
+.label {
+    width: 32%;
+    height: auto;
+    float: left;
+    text-align: right;
+    clear: both;
+    
+}
